@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1 _Authentication Forms</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div id="error" class="error">
+        <div class="error__icon">
+            <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
+        </div>
+        <div id="error-title"class="error__title">lorem ipsum dolor sit amet</div>
+        <div onclick="closeError()" class="error__close"><svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path></svg></div>
+    </div>
+
+    
+<div id="success" class="success">
+    <div class="success__icon">
+      <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14c.0878-.1004.1546-.21726.1966-.34383.0419-.12657.0581-.26026.0477-.39319-.0105-.13293-.0475-.26242-.1087-.38085-.0613-.11844-.1456-.22342-.2481-.30879-.1024-.08536-.2209-.14938-.3484-.18828s-.2616-.0519-.3942-.03823c-.1327.01366-.2612.05372-.3782.1178-.1169.06409-.2198.15091-.3027.25537l-4.3 5.159-2.225-2.226c-.1886-.1822-.4412-.283-.7034-.2807s-.51301.1075-.69842.2929-.29058.4362-.29285.6984c-.00228.2622.09851.5148.28067.7034l3 3c.0983.0982.2159.1748.3454.2251.1295.0502.2681.0729.4069.0665.1387-.0063.2747-.0414.3991-.1032.1244-.0617.2347-.1487.3236-.2554z" fill="#393a37" fill-rule="evenodd"></path></svg>
+    </div>
+    <div id="success-title" class="success__title">lorem ipsum dolor sit amet</div>
+    <div onclick="closeSuccess()" class="success__close"><svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z" fill="#393a37"></path></svg></div>
+</div>
+
+    <div class="container">
+        
+        <!-- Signup Form -->
+        <form id="signup-form" class="form-container animate__animated animate__fadeIn" action="#">
+            <h2>Create Account</h2>
+            <br>
+            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <button type="submit" onclick="signup()">Signup</button>
+           <a href="#signin-form" id="login-link" class="active"><span>Already have an account? </span>Login</a>
+        </form>
+
+        <!-- Signin Form -->
+        <form id="signin-form" class="form-container animate__animated animate__fadeIn" action="#">
+            <h2>Login Account</h2>
+            <br>
+            <input type="email" id="signin-email" placeholder="Email" required>
+            <input type="password" id="signin-password" placeholder="Password" required>
+            <button type="submit" onclick="signin()">Signin</button>
+            <a href="#signup-form" id="signup-link"><span>Don't have a account?</span> Signup</a>
+            <a href="#forgot-form" id="forgot-link">Forgot Password</a>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="forgot-form" class="form-container animate__animated animate__fadeIn" action="#">
+            <h2>Forgot Password</h2>
+            <input type="email" id="forgot-email" placeholder="Email" required>
+            <button type="submit" onclick="forgotPassword()">Reset Password</button>
+            <a href="#signin-form" id="log-link" class="active"><span>Already have an account? </span>Login</a>
+     </form>
+    </div>
+
+    <script>
+        // JavaScript to toggle active class on navigation links and show/hide forms
+        const loginLink = document.getElementById('login-link');
+        const signupLink = document.getElementById('signup-link');
+        const forgotLink = document.getElementById('forgot-link');
+        const logLink = document.getElementById('log-link');
+
+        const signupForm = document.getElementById('signup-form');
+        const signinForm = document.getElementById('signin-form');
+        const forgotForm = document.getElementById('forgot-form');
+
+        signinForm.style.display = "flex";
+        loginLink.addEventListener('click', () => {
+            
+            signupForm.style.display = 'none';
+            signinForm.style.display = 'flex';
+            forgotForm.style.display = 'none';
+        });
+
+        logLink.addEventListener('click', () => {
+            signupForm.style.display = 'none';
+            signinForm.style.display = 'flex';
+            forgotForm.style.display = 'none';
+        });
+        signupLink.addEventListener('click', () => {
+            
+            signupForm.style.display = 'flex';
+            signinForm.style.display = 'none';
+            forgotForm.style.display = 'none';
+        });
+
+        forgotLink.addEventListener('click', () => {
+            
+            signupForm.style.display = 'none';
+            signinForm.style.display = 'none';
+            forgotForm.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
